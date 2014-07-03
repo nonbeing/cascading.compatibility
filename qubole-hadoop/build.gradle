@@ -10,6 +10,7 @@ dependencies {
 
       testRuntime fileTree(dir: "/usr/lib/hadoop", include: "*.jar")
       testRuntime fileTree(dir: "/usr/lib/hadoop/hadoopJars", include: "*.jar")
+      testRuntime fileTree(dir: "./jars", include: "*.jar")
       testRuntime fileTree(dir: "/usr/lib/hadoop/lib", include: "*.jar").exclude("*junit*")
 }
 
