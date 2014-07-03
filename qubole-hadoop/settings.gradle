@@ -18,4 +18,4 @@
  * limitations under the License.
  */
 
-include 'qubole-hadoop'
+include 'qubole'
