@@ -4,12 +4,12 @@ cd /home/ec2-user
 
 # first get gradle:
 wget https://services.gradle.org/distributions/gradle-1.12-all.zip;
-unzip gradle-1.12-all.zip ;
+unzip -o gradle-1.12-all.zip ;
 
 sudo ln -s /home/ec2-user/gradle-1.12/bin/gradle /usr/bin/gradle
 
 # get our cascading-compatibility test suite to run against qubole-hadoop
-git clone https://github.com/nonbeing/cascading.compatibility.git;
+#git clone https://github.com/nonbeing/cascading.compatibility.git;
 cd cascading.compatibility;
 
 # launch all cascading-compatibility tests against qubole-hadoop:
