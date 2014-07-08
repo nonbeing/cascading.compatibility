@@ -21,12 +21,27 @@ cd cascading.compatibility;
 
 mkdir -p ./logs
 
+# the number of seconds after which the test case will be aborted
+TESTCASE_TIMEOUT=3600
+
+# timeout command error codes (http://www.gnu.org/software/coreutils/manual/html_node/timeout-invocation.html)
+TIMEOUT_ERROR_CODES="124 125 126 127 137"
+
 while read testcase; do
-    if [[ $testcase == *#* ]]; then 
-        echo "[INFO] Omitting $testcase as it is commented out with a '#'";
+    if [[ $testcase == *#* ]]; then
+        echo "\n\n[INFO] Omitting test case: '$testcase' as it is commented out with a '#'";
     else
-        echo -e "\n\n\n\n\n[INFO] Running test case: ${testcase}"
-        time gradle -Dtest.single=${testcase} :qubole-hadoop:test -i | tee "./logs/${testcase}.log"
+        echo -e "\n\n[INFO] Running test case: '${testcase}'"
+
+        timeout ${TESTCASE_TIMEOUT} gradle -Dtest.single=${testcase} :qubole-hadoop:test -i  &> ./logs/${testcase}.log
+        retcode=$?
+        echo -e "timeout-RETCODE for '${testcase}': $retcode";
+
+        if [[ "${timeout_error_codes}" =~ $retcode ]]; then
+            echo -e "[INFO] Test Case: '${testcase}' gave timeout-error '$retcode' after '${TESTCASE_TIMEOUT}' seconds\n\n"
+        else
+            echo -e "[INFO] Test Case: '${testcase}' completed within '${TESTCASE_TIMEOUT}' seconds\n\n"
+        fi
     fi
 done < cascading_all_testcases.txt
 
