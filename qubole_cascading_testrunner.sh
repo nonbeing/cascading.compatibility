@@ -22,8 +22,12 @@ cd cascading.compatibility;
 mkdir -p ./logs
 
 while read testcase; do
-     echo -e "\n\n\n\n\n[INFO] Running test case: ${testcase}"
-     time gradle -Dtest.single=${testcase} :qubole-hadoop:test -i | tee "./logs/${testcase}.log"
+    if [[ $testcase == *#* ]]; then 
+        echo "[INFO] Omitting $testcase as it is commented out with a '#'";
+    else
+        echo -e "\n\n\n\n\n[INFO] Running test case: ${testcase}"
+        time gradle -Dtest.single=${testcase} :qubole-hadoop:test -i | tee "./logs/${testcase}.log"
+    fi
 done < cascading_all_testcases.txt
 
 echo -e "\n\n\n\n[INFO] Finished!"
