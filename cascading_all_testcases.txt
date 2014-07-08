@@ -1,4 +1,4 @@
-#CoGroupFieldedPipesPlatformTest
+CoGroupFieldedPipesPlatformTest
 FieldedPipesPlatformTest
 SerializedPipesPlatformTest
 JoinFieldedPipesPlatformTest
